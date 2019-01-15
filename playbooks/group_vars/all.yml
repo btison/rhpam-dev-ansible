@@ -1,0 +1,9 @@
+---
+
+home_dir: "{{ playbook_dir }}/../"
+
+# resources dir
+resources_home_dir: "{{ home_dir }}/resources"
+
+# oc executable
+openshift_cli: oc

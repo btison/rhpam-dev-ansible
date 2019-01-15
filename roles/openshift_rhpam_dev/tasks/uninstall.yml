@@ -1,0 +1,102 @@
+---
+
+- name: delete kie-server route
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ kieserver_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: route
+
+- name: delete kieserver service
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ kieserver_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: service
+
+- name: delete kieserver dc
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ kieserver_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: dc
+
+- name: delete postgresql dc
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ postgresql_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: dc
+
+- name: delete postgresql service
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ postgresql_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: service
+
+- name: delete postgresql pvc
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ postgresql_application_name}}"
+    namespace: "{{ ocp_project }}"
+    kind: pvc
+
+- name: delete postgresql secret
+  oc_secret:
+    oc_binary: "{{ openshift_cli }}"
+    namespace: "{{ ocp_project }}"
+    name: "{{ postgresql_application_name }}"
+    state: absent
+
+- name: delete postgresql init configmap
+  oc_configmap:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ postgresql_init_configmap }}"
+    namespace: "{{ ocp_project }}"
+
+- name: delete business-central route
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ businesscentral_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: route
+
+- name: delete business-central service
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ businesscentral_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: service
+
+- name: delete business-central dc
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ businesscentral_application_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: dc
+
+- name: delete business-central pvc
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ businesscentral_pvc_name }}"
+    namespace: "{{ ocp_project }}"
+    kind: pvc
+
+- name: delete {{ service_account }} service account
+  oc_serviceaccount:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ service_account }}"
+    namespace: "{{ ocp_project }}"

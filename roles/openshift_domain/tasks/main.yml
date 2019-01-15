@@ -1,0 +1,25 @@
+---
+
+- name: create test route
+  oc_route:
+    oc_binary: "{{ openshift_cli }}"
+    state: present
+    name: testroute
+    namespace: "{{ ocp_project }}"
+    service_name: testsvc
+    port: 80
+
+- name: get domain url
+  shell: echo $({{ openshift_cli }} get route testroute -o jsonpath='{.spec.host}' -n {{ ocp_project }} | sed "s/testroute-{{ ocp_project }}.//g")
+  register: ocp_domain_host
+
+- name: set ocp_domain fact
+  set_fact: 
+    ocp_domain: "{{ ocp_domain_host.stdout }}"
+
+- name: delete test route
+  oc_route:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: testroute
+    namespace: "{{ ocp_project }}"

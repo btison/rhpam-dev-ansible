@@ -1,0 +1,69 @@
+---
+
+application_name: rhpam
+businesscentral_application_name: "{{ application_name }}-bc"
+kieserver_application_name: "{{ application_name }}-kieserver"
+
+service_account: "{{ application_name }}-rhpamsvc"
+
+businesscentral_template: "{{ resources_dir }}/rhpam-dev-business-central.yaml"
+
+businesscentral_image_namespace: openshift
+businesscentral_image: rhpam71-businesscentral-openshift
+businesscentral_image_tag: 1.1
+businesscentral_memory_limit: 3Gi
+businesscentral_java_max_mem_ratio: 80
+businesscentral_java_initial_mem_ratio: 0
+businesscentral_gc_max_metaspace_size: 500
+businesscentral_java_opts_append: "-Dorg.uberfire.nio.git.ssh.algorithm=RSA"
+
+businesscentral_pvc_name: "{{ businesscentral_application_name }}-claim"
+businesscentral_pvc_volume_capacity: "1Gi"
+
+kieserver_template: "{{ resources_dir }}/rhpam-dev-kieserver.yaml"
+
+kieserver_image_namespace: openshift
+kieserver_image: rhpam71-kieserver-openshift
+kieserver_image_tag: 1.1
+
+kieserver_memory_limit: 2Gi
+kieserver_java_max_mem_ratio: 80
+kieserver_java_initial_mem_ratio: 0
+
+kie_admin_user: adminUser
+kie_admin_password: admin1!
+kieserver_controller_user: controllerUser
+kieserver_controller_password: controller1!
+kieserver_user: executionUser
+kieserver_password: execution1!
+kie_maven_user: mavenUser
+kie_maven_password: maven1!
+kie_mbeans: enabled
+
+kieserver_id: kieserver-dev
+
+drools_server_filter_classes: true
+kieserver_bypass_auth_user: false
+
+kieserver_controller_protocol: ws
+kieserver_host: "{{ kieserver_application_name }}"
+kieserver_port: 8080
+kieserver_protocol: http
+
+nexus_host: "{{ nexus_app }}.{{ project_nexus }}.svc"
+nexus_port: 8081 
+nexus_path: content/groups/public/
+
+postgresql_template: "{{ resources_dir }}/rhpam-dev-postgresql.yaml"
+postgresql_application_name: "{{ application_name }}-postgresql"
+postgresql_credentials_secret: "{{ postgresql_application_name }}" 
+postgresql_init_configmap: "{{ postgresql_application_name }}-init"
+postgresql_pv_capacity: 5Gi
+postgresql_version: 9.6
+postgresql_is_namespace: openshift
+postgresql_username: rhpam
+postgresql_password: rhpam
+postgresql_database: rhpam
+postgresql_max_connections: 100
+postgresql_max_prepared_transactions: 100
+postgresql_memory_limit: 512Mi
