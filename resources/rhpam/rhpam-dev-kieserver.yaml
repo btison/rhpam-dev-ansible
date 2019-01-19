@@ -109,7 +109,9 @@ items:
           - name: JAVA_MAX_MEM_RATIO
             value: "{{ kieserver_java_max_mem_ratio }}"
           - name: JAVA_INITIAL_MEM_RATIO
-            value: "{{ kieserver_java_initial_mem_ratio }}"            
+            value: "{{ kieserver_java_initial_mem_ratio }}"
+          - name: GC_MAX_METASPACE_SIZE
+            value: "{{ kieserver_gc_max_metaspace_size }}"
           - name: DATASOURCES
             value: "RHPAM"
           - name: RHPAM_USERNAME
