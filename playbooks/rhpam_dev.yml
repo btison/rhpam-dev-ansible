@@ -7,6 +7,7 @@
   run_once: true
   vars_files:
     - group_vars/rhpam_dev.yml
+    - group_vars/nexus2.yml
 
   tasks:
     - include_role:

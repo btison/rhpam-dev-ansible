@@ -172,7 +172,7 @@ items:
           - name: KIE_SERVER_PWD
             value: "{{ kieserver_password }}"
           - name: MAVEN_REPOS
-            value: "RHPAMCENTR"
+            value: "RHPAMCENTR,EXTERNAL"
           - name: RHPAMCENTR_MAVEN_REPO_SERVICE
             value: "{{ businesscentral_application_name }}"
           - name: RHPAMCENTR_MAVEN_REPO_PATH
@@ -181,3 +181,9 @@ items:
             value: "{{ kie_maven_user }}"
           - name: RHPAMCENTR_MAVEN_REPO_PASSWORD
             value: "{{ kie_maven_password }}"
+          - name: EXTERNAL_MAVEN_REPO_HOST
+            value: "{{ nexus_host }}"
+          - name: EXTERNAL_MAVEN_REPO_PORT
+            value: "{{ nexus_port }}"
+          - name: EXTERNAL_MAVEN_REPO_PATH
+            value: "{{ nexus_path }}"

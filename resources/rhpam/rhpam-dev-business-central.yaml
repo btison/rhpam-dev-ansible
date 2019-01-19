@@ -144,6 +144,14 @@ items:
             value: "eapadmin"
           - name: ADMIN_PASSWORD
             value: "eapadmin1!"
+          - name: MAVEN_REPOS
+            value: "EXTERNAL"
+          - name: EXTERNAL_MAVEN_REPO_HOST
+            value: "{{ nexus_host }}"
+          - name: EXTERNAL_MAVEN_REPO_PORT
+            value: "{{ nexus_port }}"
+          - name: EXTERNAL_MAVEN_REPO_PATH
+            value: "{{ nexus_path }}"
           - name: JAVA_OPTS_APPEND
             value: "{{ businesscentral_java_opts_append }}"
         volumes:
