@@ -7,9 +7,11 @@
   run_once: true
   vars_files:
     - group_vars/rhpam_dev.yml
-    - group_vars/nexus2.yml
+    - group_vars/tools.yml
 
   tasks:
+    - set_fact:
+        project_nexus: "{{ project_tools }}"
     - include_role:
         name: ../roles/openshift_rhpam_dev
       when: >

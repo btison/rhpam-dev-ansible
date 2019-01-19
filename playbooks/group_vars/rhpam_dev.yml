@@ -8,6 +8,3 @@ ocp_project_desc: "RHPAM dev environment"
 resources_dir: "{{ resources_home_dir }}/rhpam"
 
 uninstall_delete_project: True
-
-project_admin: "{{ ocp_user }}"
-project_annotations: "openshift.io/requester={{ ocp_user }}"

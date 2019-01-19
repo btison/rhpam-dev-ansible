@@ -7,3 +7,6 @@ resources_home_dir: "{{ home_dir }}/resources"
 
 # oc executable
 openshift_cli: oc
+
+project_admin: "{{ ocp_user }}"
+project_annotations: "openshift.io/requester={{ ocp_user }}"
