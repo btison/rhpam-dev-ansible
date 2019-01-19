@@ -1,8 +1,7 @@
 ---
 
 work_dir_name: rhpam-dev
-
-ocp_project: rhpam-dev
+ocp_project: "rhpam-dev-{{ ocp_user }}"
 ocp_project_display_name: "RHPAM-dev"
 ocp_project_desc: "RHPAM dev environment"
 
