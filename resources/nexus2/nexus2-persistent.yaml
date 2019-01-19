@@ -1,0 +1,109 @@
+kind: List
+apiVersion: v1
+items:
+- kind: Route
+  apiVersion: v1
+  metadata:
+    labels:
+      app: {{ nexus_app }}
+    name: {{ nexus_app }}
+  spec:
+    port:
+      targetPort: 8081-tcp
+    to:
+      kind: Service
+      name: {{ nexus_app }}
+      weight: 100
+- kind: Service
+  apiVersion: v1
+  metadata:
+    labels:
+      app: {{ nexus_app }}
+    name: {{ nexus_app }}
+  spec:
+    ports:
+    - name: 8081-tcp
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    selector:
+      deploymentconfig: {{ nexus_app }}
+    sessionAffinity: None
+    type: ClusterIP
+- kind: Deployment
+  apiVersion: extensions/v1beta1
+  metadata:
+    labels:
+      app: {{ nexus_app }}
+    name: {{ nexus_app }}
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        deploymentconfig: {{ nexus_app }}
+    template:
+      metadata:
+        labels:
+          deploymentconfig: {{ nexus_app }}
+      spec:
+        containers:
+        - env:
+          - name: CONTEXT_PATH
+            value: /
+          image: docker.io/sonatype/nexus:{{ nexus_version }}
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - echo
+              - ok
+            failureThreshold: 3
+            initialDelaySeconds: 300
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: {{ nexus_app }}
+          ports:
+          - containerPort: 8081
+            protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /content/groups/public/
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: {{ nexus_max_memory }}
+              cpu: {{ nexus_max_cpu }}
+            requests:
+              memory: 500Mi
+              cpu: 250m
+          restartPolicy: Always
+          terminationMessagePath: /dev/termination-log
+          volumeMounts:
+          - mountPath: /sonatype-work
+            name: nexus-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: nexus-data
+          persistentVolumeClaim:
+            claimName: {{ nexus_pvc_name }}
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    labels:
+      app: {{ nexus_app }}
+    name: {{ nexus_pvc_name }}
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: {{ nexus_pv_capacity }}

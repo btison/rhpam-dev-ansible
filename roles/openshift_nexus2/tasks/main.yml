@@ -1,0 +1,40 @@
+---
+
+# deploy nexus
+- name: nexus template
+  template:
+    src: "{{ nexus_template }}"
+    dest: "{{ work_dir }}/nexus.yaml"
+  changed_when: false
+
+- name: check if nexus is deployed
+  oc_obj:
+    oc_binary: "{{ openshift_cli }}"
+    state: list
+    name: "{{ nexus_app }}"
+    namespace: "{{ ocp_project }}"
+    kind: deployment
+  register: result
+
+- name: deploy nexus
+  oc_list:
+    state: present
+    oc_binary: "{{ openshift_cli }}"
+    namespace: "{{ ocp_project }}"
+    files:
+      - "{{ work_dir }}/nexus.yaml"
+  when: result.results.stderr is defined and result.results.stderr != ""
+
+- name: wait until nexus is up and running
+  shell: "{{ openshift_cli }} get deployment {{ nexus_app }} -o template --template={{ json_template }} -n {{ ocp_project }}"
+  vars:
+    json_template: '\{\{.status.readyReplicas\}\}'
+  register: result
+  until: result.stdout == "1"
+  retries: 20
+  delay: 30
+  changed_when: false
+
+- import_tasks: configure_repository_loop.yml
+  vars:
+    proxy_repos: "{{ nexus_remote_proxy_repos }}"

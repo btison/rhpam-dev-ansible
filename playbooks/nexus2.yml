@@ -1,0 +1,31 @@
+---
+
+- name: Deploy Nexus 2
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  run_once: true
+  vars_files:
+    - group_vars/nexus2.yml
+
+  tasks:
+    - set_fact:
+        ocp_project: "{{ project_nexus }}"
+        ocp_project_display_name: "{{ project_nexus_display_name }}"
+        ocp_project_desc: "{{ project_nexus_desc }}"
+        work_dir_name: nexus2
+        resources_dir: "{{ resources_home_dir }}/nexus2"
+        uninstall_delete_project: False        
+    - include_role:
+        name: ../roles/openshift_nexus2
+      when: >
+        ACTION is not defined or
+        ACTION is none or
+        ACTION|trim() == "" or
+        ACTION|trim() == "install"
+    - include_role:
+        name: ../roles/openshift_nexus2
+        tasks_from: uninstall
+      when: >
+        ACTION is defined and
+        ACTION|trim() == "uninstall"

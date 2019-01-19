@@ -1,0 +1,7 @@
+---
+
+project_nexus: tools-{{ ocp_user }}
+project_nexus_display_name: "Tools"
+project_nexus_desc: "Tools"
+
+nexus_app: nexus
