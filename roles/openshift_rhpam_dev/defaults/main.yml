@@ -11,8 +11,11 @@ businesscentral_template: "{{ resources_dir }}/rhpam-dev-business-central.yaml"
 businesscentral_image_namespace: openshift
 businesscentral_image: rhpam71-businesscentral-openshift
 businesscentral_image_tag: 1.1
+business_central_cpu_request: 200m
+businesscentral_memory_request: 1Gi
+businesscentral_cpu_limit: 2000m
 businesscentral_memory_limit: 3Gi
-businesscentral_java_max_mem_ratio: 70
+businesscentral_java_max_mem_ratio: 60
 businesscentral_java_initial_mem_ratio: 0
 businesscentral_gc_max_metaspace_size: 500
 businesscentral_java_opts_append: "-Dorg.uberfire.nio.git.ssh.algorithm=RSA"
@@ -26,6 +29,9 @@ kieserver_image_namespace: openshift
 kieserver_image: rhpam71-kieserver-openshift
 kieserver_image_tag: 1.1
 
+kieserver_cpu_request: 200m
+kieserver_memory_request: 1Gi
+kieserver_cpu_limit: 1000m
 kieserver_memory_limit: 3Gi
 kieserver_java_max_mem_ratio: 60
 kieserver_java_initial_mem_ratio: 0

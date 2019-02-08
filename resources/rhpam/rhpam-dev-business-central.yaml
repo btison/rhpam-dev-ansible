@@ -78,7 +78,11 @@ items:
           image: {{ businesscentral_image }}
           imagePullPolicy: Always
           resources:
+            requests:
+              cpu: "{{ business_central_cpu_request }}"
+              memory: "{{ businesscentral_memory_request }}"
             limits:
+              cpu: "{{ businesscentral_cpu_limit }}"
               memory: "{{ businesscentral_memory_limit }}"
           volumeMounts:
           - name: "{{ businesscentral_application_name }}-pvol"

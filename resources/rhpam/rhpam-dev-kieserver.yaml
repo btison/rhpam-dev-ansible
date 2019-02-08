@@ -73,7 +73,11 @@ items:
           image: {{ kieserver_image }}
           imagePullPolicy: Always
           resources:
+            requests:
+              cpu: "{{ kieserver_cpu_request }}"
+              memory: "{{ kieserver_memory_request }}"
             limits:
+              cpu: "{{ kieserver_cpu_limit }}"
               memory: "{{ kieserver_memory_limit }}"
           livenessProbe:
             exec:
