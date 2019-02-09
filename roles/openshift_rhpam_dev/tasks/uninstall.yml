@@ -100,3 +100,12 @@
     state: absent
     name: "{{ service_account }}"
     namespace: "{{ ocp_project }}"
+
+- name: delete project
+  oc_project:
+    oc_binary: "{{ openshift_cli }}"
+    state: absent
+    name: "{{ ocp_project }}"
+  when: >
+    uninstall_delete_project is defined and
+    uninstall_delete_project == True

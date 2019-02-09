@@ -1,0 +1,34 @@
+---
+
+- name: Install environment for multiple users
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  run_once: true
+  vars_files:
+    - group_vars/tools.yml
+    - group_vars/rhpam_dev.yml
+
+  tasks:
+    - set_fact:
+        uninstall_delete_project: True
+        user_sequence: "{{ range((seq_start|int), (seq_end|int) + 1) | list }}"
+    - include_role:
+        name: ../roles/openshift_install
+      vars:
+        ocp_user: "{{ user_prefix }}{{ item }}"
+      when: >
+        ACTION is not defined or
+        ACTION is none or
+        ACTION|trim() == "" or
+        ACTION|trim() == "install"
+      loop: "{{ user_sequence }}"
+    - include_role:
+        name: ../roles/openshift_install
+        tasks_from: uninstall
+      vars:
+        ocp_user: "{{ 'user%x'|format(item) }}"
+      when: >
+        ACTION is defined and
+        ACTION|trim() == "uninstall"
+      loop: "{{ user_sequence }}"

@@ -10,3 +10,5 @@ openshift_cli: oc
 
 project_admin: "{{ ocp_user }}"
 project_annotations: "openshift.io/requester={{ ocp_user }}"
+
+user_prefix: user

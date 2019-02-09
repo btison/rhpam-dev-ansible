@@ -1,0 +1,35 @@
+---
+
+- name: uninstall nexus
+  import_role: 
+    name: openshift_nexus2
+    tasks_from: uninstall
+  vars:
+    ocp_project: "{{ project_tools }}"
+    ocp_project_display_name: "{{ project_tools_display_name }}"
+    ocp_project_desc: "{{ project_tools_desc }}"
+    work_dir_name: nexus2
+    resources_dir: "{{ resources_home_dir }}/nexus2"
+  
+- name: uninstall pgadmin4
+  import_role: 
+    name: openshift_pgadmin4
+    tasks_from: uninstall
+  vars:
+    ocp_project: "{{ project_tools }}"
+    ocp_project_display_name: "{{ project_tools_display_name }}"
+    ocp_project_desc: "{{ project_tools_desc }}"
+    work_dir_name: pgadmin4
+    resources_dir: "{{ resources_home_dir }}/pgadmin4"    
+
+- name: uninstall rhpam-dev
+  import_role: 
+    name: openshift_rhpam_dev
+    tasks_from: uninstall
+  vars:
+    project_nexus: "{{ project_tools }}"
+    ocp_project: "{{ project_rhpam }}"
+    ocp_project_display_name: "{{ project_rhpam_display_name }}"
+    ocp_project_desc: "{{ project_rhpam_desc }}"
+    work_dir_name: rhpam-dev
+    resources_dir: "{{ resources_home_dir }}/rhpam"    

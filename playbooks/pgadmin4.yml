@@ -13,7 +13,6 @@
         ocp_project: "{{ project_tools }}"
         ocp_project_display_name: "{{ project_tools_display_name }}"
         ocp_project_desc: "{{ project_tools_desc }}"
-        application_name: pgadmin4
         work_dir_name: pgadmin4
         resources_dir: "{{ resources_home_dir }}/pgadmin4"
     - include_role:
