@@ -1,3 +1,5 @@
+:numbered:
+
 = Ansible playbook for provisioning RHPAM (Business Central + KIE Server + Postgres)
 
 .Prerequisites:
@@ -9,7 +11,8 @@
 ocp_user=user1
 
 # Using custom images for Business-Central and KIE Server__
-# The `quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1` and `quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1` are derived from the Red Hat RHPAM 7.2.x images. The images are configured with users and groups required to support the GPTE courses and labs.
+# The `quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1` and `quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1` are derived from the Red Hat RHPAM 7.2.x images. 
+# The images are configured with users and groups required to support the GPTE courses and labs.
 use_custom_pam=true
 
 # GPTE SHARED CLUSTER
