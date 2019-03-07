@@ -1,7 +1,7 @@
 ---
 
 # TO-DO:  Use idempotent python based openshift-ansible 
-- name: "Create user Quota - {{ quota_name }}"
+- name: "Create user Quota - {{ quota_name }} " 
   shell: |
         oc create clusterquota "{{ quota_name }}" \
         --project-annotation-selector=openshift.io/requester="{{ ocp_user }}" \
@@ -17,8 +17,8 @@
         --hard requests.storage="{{ quota_requests_storage }}"
   ignore_errors: true
   when: >
-    use_cluster_quota|bool and
-    ACTION is not defined or
+    use_cluster_quota|bool and 
+    ( ACTION is not defined or
     ACTION is none or
     ACTION|trim() == "" or
-    ACTION|trim() == "install"
+    ACTION|trim() == "install" )

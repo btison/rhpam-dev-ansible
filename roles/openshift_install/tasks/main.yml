@@ -9,7 +9,6 @@
     ocp_project_desc: "{{ project_tools_desc }}"
     work_dir_name: nexus2
     resources_dir: "{{ resources_home_dir }}/nexus2"
-    use_cluster_quota: "{{ use_cluster_quota }}"
   
 - name: install pgadmin4
   import_role: 
@@ -20,7 +19,6 @@
     ocp_project_desc: "{{ project_tools_desc }}"
     work_dir_name: pgadmin4
     resources_dir: "{{ resources_home_dir }}/pgadmin4"    
-    use_cluster_quota: "{{ use_cluster_quota }}"
 
 - name: install rhpam-dev
   import_role: 
@@ -32,4 +30,3 @@
     ocp_project_desc: "{{ project_rhpam_desc }}"
     work_dir_name: rhpam-dev
     resources_dir: "{{ resources_home_dir }}/rhpam"    
-    use_cluster_quota: "{{ use_cluster_quota }}"

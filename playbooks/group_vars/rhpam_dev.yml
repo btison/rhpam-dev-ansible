@@ -1,5 +1,8 @@
 ---
 
+# In a shared GPTE cluster (ie: na311), this value will be over-written
+guid: "{{ ocp_user }}"
+
 project_rhpam: "rhpam-dev-{{ guid }}"
 project_rhpam_display_name: "RHPAM-dev"
 project_rhpam_desc: "RHPAM dev environment"

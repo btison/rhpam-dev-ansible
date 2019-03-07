@@ -1,6 +1,6 @@
 :numbered:
 
-= Ansible playbook for provisioning RHPAM (Business Central + KIE Server + Postgres)
+= RHPAM (Business Central + KIE Server + Postgres) Provisioning
 
 .Prerequisites:
 * Log in into Openshift as cluster admin user.
@@ -8,36 +8,79 @@
 == Environment Variables
 
 -----
-ocp_user=user1
-
-# Using custom images for Business-Central and KIE Server__
-# The `quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1` and `quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1` are derived from the Red Hat RHPAM 7.2.x images. 
-# The images are configured with users and groups required to support the GPTE courses and labs.
-use_custom_pam=true
-
-# GPTE SHARED CLUSTER
-guid=1234
-use_cluster_quota=true
-kieserver_image_namespace=rhpam-dev-$guid
-businesscentral_image_namespace=rhpam-dev-$guid
-
-
-# ALL OTHER OCP ENVIRONMENTS
-guid=$ocp_user
+# Dedicated OCP Workshop
+guid=$ocp_user                                      # project names will be of convention: pam-7-tools-user1
 use_cluster_quota=false
 kieserver_image_namespace=openshift
 businesscentral_image_namespace=openshift
-seq_start=1     # specify first rhpam env to manage
-seq_end=1       # specify last rhpam env to manage
+
+
+
 -----
 
 
-== Manage Components Individually
+== Manage Sequence of PAM 7 Installs
 
-NOTE: Each of the components listed below can be uninstalled by appending the following parameter to the command:  `-e ACTION=uninstall`.
+NOTE: This approach is not applicable in a shared GPTE cluster such as na311.
+Use only in a dedicated cluster workshop environment.
+
+. Environment Variables
++
+-----
+# Using custom images for Business-Central and KIE Server.
+# Specifically, the following are derived from RHT RHPAM 7.2.x images:
+#   1) quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1 
+#   2) quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1
+# The images are configured with users and groups required to support GPTE courses and labs.
+use_custom_pam=true
+
+seq_start=1     # specify first rhpam env to manage
+seq_end=1       # specify last rhpam env to manage
+
+-----
+
+. Install
++
+-----
+$ ansible-playbook playbooks/install.yml \
+    -e use_custom_pam=$use_custom_pam \
+    -e seq_start=$seq_start \
+    -e seq_end=$seq_end
+-----
+
+. Uninstall
++
+-----
+$ ansible-playbook playbooks/install.yml \
+    -e ACTION=uninstall \
+    -e seq_start=$seq_start \
+    -e seq_end=$seq_end
+-----
 
 
-. Provision PostgreSQL Admin
+== Manage Individual Components of a Single PAM7 Install
+
+. Shell Environment Variables
++
+-----
+# Using custom images for Business-Central and KIE Server.
+# Specifically, the following are derived from RHT RHPAM 7.2.x images:
+#   1) quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1 
+#   2) quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1
+# The images are configured with users and groups required to support GPTE courses and labs.
+use_custom_pam=true
+
+# project names will be of convention: pam-7-tools-{{ guid }} and will be owned by {{ ocp_user }}
+ocp_user=opentlcuser-redhat.com
+guid=1234 
+
+use_cluster_quota=true
+kieserver_image_namespace=rhpam-dev-$guid
+businesscentral_image_namespace=rhpam-dev-$guid
+-----
+
+
+. Provision PostgreSQL Admin Console
 +
 -----
 $ ansible-playbook playbooks/pgadmin4.yml \
@@ -64,34 +107,7 @@ $ ansible-playbook playbooks/rhpam_dev.yml \
     -e use_cluster_quota=$use_cluster_quota \
     -e kieserver_image_namespace=$kieserver_image_namespace \
     -e businesscentral_image_namespace=$businesscentral_image_namespace \
-    -e use_custom_pam=$use_custom_pam \
-    -e seq_start=$seq_start \
-    -e seq_end=$seq_end
+    -e use_custom_pam=$use_custom_pam
 -----
 
-== Manage All Components
 
-. Install
-+
------
-$ ansible-playbook playbooks/install.yml \
-    -e guid=$guid \
-    -e ocp_user=$ocp_user \
-    -e use_cluster_quota=$use_cluster_quota \
-    -e kieserver_image_namespace=$kieserver_image_namespace \
-    -e businesscentral_image_namespace=$businesscentral_image_namespace \
-    -e use_custom_pam=$use_custom_pam \
-    -e seq_start=$seq_start \
-    -e seq_end=$seq_end
------
-
-. Uninstall
-+
------
-$ ansible-playbook playbooks/install.yml \
-    -e guid=$guid \
-    -e ocp_user=$ocp_user \
-    -e ACTION=uninstall \
-    -e seq_start=$seq_start \
-    -e seq_end=$seq_end
------

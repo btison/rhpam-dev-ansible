@@ -1,5 +1,8 @@
 ---
 
+# In a shared GPTE cluster (ie: na311), this value will be over-written
+guid: "{{ ocp_user }}"  
+
 project_tools: pam-7-tools-{{ guid }}
 project_tools_display_name: "Tools"
 project_tools_desc: "Tools"
