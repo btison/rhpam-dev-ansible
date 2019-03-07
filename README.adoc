@@ -5,19 +5,6 @@
 .Prerequisites:
 * Log in into Openshift as cluster admin user.
 
-== Environment Variables
-
------
-# Dedicated OCP Workshop
-guid=$ocp_user                                      # project names will be of convention: pam-7-tools-user1
-use_cluster_quota=false
-kieserver_image_namespace=openshift
-businesscentral_image_namespace=openshift
-
-
-
------
-
 
 == Manage Sequence of PAM 7 Installs
 
