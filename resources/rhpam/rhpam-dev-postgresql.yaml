@@ -55,7 +55,13 @@ items:
             - init-volume
           failurePolicy: Abort
         timeoutSeconds: 600
-      resources: {}
+      resources:
+        requests:
+          cpu: "{{ psql_cpu_request }}"
+          memory: "{{ psql_memory_request }}"
+        limits:
+          cpu: "{{ psql_cpu_limit }}"
+          memory: "{{ psql_memory_limit }}"
       type: Recreate
     triggers:
     - type: ImageChange

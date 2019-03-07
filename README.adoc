@@ -1,0 +1,94 @@
+= Ansible playbook for provisioning RHPAM (Business Central + KIE Server + Postgres)
+
+.Prerequisites:
+* Log in into Openshift as cluster admin user.
+
+== Environment Variables
+
+-----
+ocp_user=user1
+
+# Using custom images for Business-Central and KIE Server__
+# The `quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1` and `quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1` are derived from the Red Hat RHPAM 7.2.x images. The images are configured with users and groups required to support the GPTE courses and labs.
+use_custom_pam=true
+
+# GPTE SHARED CLUSTER
+guid=1234
+use_cluster_quota=true
+kieserver_image_namespace=rhpam-dev-$guid
+businesscentral_image_namespace=rhpam-dev-$guid
+
+
+# ALL OTHER OCP ENVIRONMENTS
+guid=$ocp_user
+use_cluster_quota=false
+kieserver_image_namespace=openshift
+businesscentral_image_namespace=openshift
+seq_start=1     # specify first rhpam env to manage
+seq_end=1       # specify last rhpam env to manage
+-----
+
+
+== Manage Components Individually
+
+NOTE: Each of the components listed below can be uninstalled by appending the following parameter to the command:  `-e ACTION=uninstall`.
+
+
+. Provision PostgreSQL Admin
++
+-----
+$ ansible-playbook playbooks/pgadmin4.yml \
+    -e ocp_user=$ocp_user \
+    -e guid=$guid \
+    -e use_cluster_quota=$use_cluster_quota
+-----
+
+. Provision Nexus
++
+-----
+$ ansible-playbook playbooks/nexus2.yml \
+    -e ocp_user=$ocp_user \
+    -e guid=$guid \
+    -e use_cluster_quota=$use_cluster_quota
+-----
+
+. Provision PAM components
++
+-----
+$ ansible-playbook playbooks/rhpam_dev.yml \
+    -e ocp_user=$ocp_user \
+    -e guid=$guid \
+    -e use_cluster_quota=$use_cluster_quota \
+    -e kieserver_image_namespace=$kieserver_image_namespace \
+    -e businesscentral_image_namespace=$businesscentral_image_namespace \
+    -e use_custom_pam=$use_custom_pam \
+    -e seq_start=$seq_start \
+    -e seq_end=$seq_end
+-----
+
+== Manage All Components
+
+. Install
++
+-----
+$ ansible-playbook playbooks/install.yml \
+    -e guid=$guid \
+    -e ocp_user=$ocp_user \
+    -e use_cluster_quota=$use_cluster_quota \
+    -e kieserver_image_namespace=$kieserver_image_namespace \
+    -e businesscentral_image_namespace=$businesscentral_image_namespace \
+    -e use_custom_pam=$use_custom_pam \
+    -e seq_start=$seq_start \
+    -e seq_end=$seq_end
+-----
+
+. Uninstall
++
+-----
+$ ansible-playbook playbooks/install.yml \
+    -e guid=$guid \
+    -e ocp_user=$ocp_user \
+    -e ACTION=uninstall \
+    -e seq_start=$seq_start \
+    -e seq_end=$seq_end
+-----

@@ -9,7 +9,7 @@ service_account: "{{ application_name }}-rhpamsvc"
 businesscentral_template: "{{ resources_dir }}/rhpam-dev-business-central.yaml"
 
 businesscentral_image_namespace: openshift
-businesscentral_image: rhpam71-businesscentral-openshift
+businesscentral_image: rhpam72-businesscentral-openshift
 businesscentral_image_tag: 1.1
 business_central_cpu_request: 200m
 businesscentral_memory_request: 1Gi
@@ -26,7 +26,7 @@ businesscentral_pvc_volume_capacity: "1Gi"
 kieserver_template: "{{ resources_dir }}/rhpam-dev-kieserver.yaml"
 
 kieserver_image_namespace: openshift
-kieserver_image: rhpam71-kieserver-openshift
+kieserver_image: rhpam72-kieserver-openshift
 kieserver_image_tag: 1.1
 
 kieserver_cpu_request: 200m
@@ -74,3 +74,10 @@ postgresql_database: rhpam
 postgresql_max_connections: 100
 postgresql_max_prepared_transactions: 100
 postgresql_memory_limit: 512Mi
+
+psql_cpu_request: 250m
+psql_memory_request: 256Mi
+psql_cpu_limit: 500m
+psql_memory_limit: 512Mi
+
+use_custom_pam: false

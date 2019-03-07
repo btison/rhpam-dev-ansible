@@ -1,5 +1,5 @@
 ---
 
-project_rhpam: "rhpam-dev-{{ ocp_user }}"
+project_rhpam: "rhpam-dev-{{ guid }}"
 project_rhpam_display_name: "RHPAM-dev"
 project_rhpam_desc: "RHPAM dev environment"

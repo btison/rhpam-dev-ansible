@@ -1,6 +1,6 @@
 ---
 
-project_tools: tools-{{ ocp_user }}
+project_tools: pam-7-tools-{{ guid }}
 project_tools_display_name: "Tools"
 project_tools_desc: "Tools"
 

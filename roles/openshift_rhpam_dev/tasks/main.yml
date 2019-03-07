@@ -1,5 +1,33 @@
 ---
 
+- name: add custom pam image streams
+  block:
+
+
+# TO-DO: Change to idempotent oc_image.py from openshift-ansible project
+  - command: "oc import-image quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1 -n {{ kieserver_image_namespace }} --confirm"
+  - command: "oc import-image quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1 -n {{ kieserver_image_namespace }} --confirm"
+#  - oc_image:
+#      state: present
+#      image_name: "rhpam72-kieserver-openshift-gpte"
+#      image_tag: "1.1"
+#      registry_url: quay.io/btison
+#      namespace: "{{ kieserver_image_namespace }}"
+#  - oc_image:
+#      state: present
+#      image_name: "rhpam72-businesscentral-openshift-gpte"
+#      image_tag: "1.1"
+#      registry_url: quay.io/btison
+#      namespace: "{{ kieserver_image_namespace }}"
+
+
+  - set_fact:
+      kieserver_image: rhpam72-kieserver-openshift-gpte 
+      kieserver_image_tag: 1.1 
+      businesscentral_image: rhpam72-businesscentral-openshift-gpte
+      businesscentral_image_tag: 1.1
+  when: use_custom_pam|bool
+
 - name: create {{ service_account }} service account
   oc_serviceaccount:
     oc_binary: "{{ openshift_cli }}"
