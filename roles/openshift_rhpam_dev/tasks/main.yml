@@ -4,7 +4,10 @@
   block:
 
 
-# TO-DO: Change to idempotent oc_image.py from openshift-ansible project
+# TO-DO: 
+#   1) Change to idempotent oc_image.py from openshift-ansible project
+#   2) Appears that tag of image managed by docker at runtime is <none> .
+#      Subsequently, docker wants to re-pull image open OCP cluster re-start
   - command: "oc import-image quay.io/btison/rhpam72-kieserver-openshift-gpte:1.1 -n {{ kieserver_image_namespace }} --confirm"
   - command: "oc import-image quay.io/btison/rhpam72-businesscentral-openshift-gpte:1.1 -n {{ kieserver_image_namespace }} --confirm"
 #  - oc_image:
