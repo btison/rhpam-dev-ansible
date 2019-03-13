@@ -9,7 +9,7 @@
 == Manage Sequence of PAM 7 Installs
 
 NOTE: This approach is not applicable in a shared GPTE cluster such as na311.
-Use only in a dedicated cluster workshop environment.
+Use only in a dedicated OCP cluster workshop environment:  ie:  https://labs.opentlc.com -> Services -> OPENTLC OpenShift Labs -> OpenShift Workshop Deployer
 
 . Environment Variables
 +
