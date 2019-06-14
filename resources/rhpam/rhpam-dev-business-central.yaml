@@ -132,6 +132,12 @@ items:
             value: "{{ kie_admin_password }}"
           - name: KIE_MBEANS
             value: "{{ kie_mbeans }}"
+          - name: KIE_SERVER_CONTROLLER_OPENSHIFT_PREFER_KIESERVER_SERVICE
+            value: "{{ kie_server_controller_prefer_kieserver_service }}"
+          - name: KIE_SERVER_CONTROLLER_TEMPLATE_CACHE_TTL
+            value: "{{ kie_server_controller_template_cache_ttl }}"
+          - name: KIE_WORKBENCH_CONTROLLER_OPENSHIFT_ENABLED
+            value: "{{ kie_workbench_controller_openshift_enabled }}"
           - name: KIE_SERVER_CONTROLLER_USER
             value: "{{ kieserver_controller_user }}"
           - name: KIE_SERVER_CONTROLLER_PWD

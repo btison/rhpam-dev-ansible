@@ -9,8 +9,8 @@ service_account: "{{ application_name }}-rhpamsvc"
 businesscentral_template: "{{ resources_dir }}/rhpam-dev-business-central.yaml"
 
 businesscentral_image_namespace: openshift
-businesscentral_image: rhpam72-businesscentral-openshift
-businesscentral_image_tag: 1.1
+businesscentral_image: rhpam73-businesscentral-openshift
+businesscentral_image_tag: 1.0
 business_central_cpu_request: 200m
 businesscentral_memory_request: 1Gi
 businesscentral_cpu_limit: 2000m
@@ -20,14 +20,18 @@ businesscentral_java_initial_mem_ratio: 0
 businesscentral_gc_max_metaspace_size: 500
 businesscentral_java_opts_append: "-Dorg.uberfire.nio.git.ssh.algorithm=RSA"
 
+kie_server_controller_prefer_kieserver_service: "false"
+kie_server_controller_template_cache_ttl: "60000"
+kie_workbench_controller_openshift_enabled: "false"
+
 businesscentral_pvc_name: "{{ businesscentral_application_name }}-claim"
 businesscentral_pvc_volume_capacity: "1Gi"
 
 kieserver_template: "{{ resources_dir }}/rhpam-dev-kieserver.yaml"
 
 kieserver_image_namespace: openshift
-kieserver_image: rhpam72-kieserver-openshift
-kieserver_image_tag: 1.1
+kieserver_image: rhpam73-kieserver-openshift
+kieserver_image_tag: 1.0
 
 kieserver_cpu_request: 200m
 kieserver_memory_request: 1Gi
