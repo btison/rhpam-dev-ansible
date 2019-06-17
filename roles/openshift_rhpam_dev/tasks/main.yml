@@ -59,7 +59,7 @@
     namespace: "{{ ocp_project }}"
     files:
       - "{{ work_dir }}/rhpam-dev-business-central.yaml"
-  when: result.results.stderr is defined and result.results.stderr != ""
+  when: result.ansible_module_results.stderr is defined and result.ansible_module_results.stderr != ""
 
 # postgresql
 - name: create work directory
@@ -117,7 +117,7 @@
     namespace: "{{ ocp_project }}"
     files:
       - "{{ work_dir }}/postgresql-persistent.yaml"
-  when: result.results.stderr is defined and result.results.stderr != ""
+  when: result.ansible_module_results.stderr is defined and result.ansible_module_results.stderr != ""
 
 # kie server
 - name: wait for postgresql to be ready
@@ -161,4 +161,4 @@
     namespace: "{{ ocp_project }}"
     files:
       - "{{ work_dir }}/rhpam-dev-kieserver.yaml"
-  when: result.results.stderr is defined and result.results.stderr != ""
+  when: result.ansible_module_results.stderr is defined and result.ansible_module_results.stderr != ""

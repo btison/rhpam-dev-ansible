@@ -60,7 +60,7 @@ class OCImage(OpenShiftCLI):
         if state == 'list':
             if api_rval['returncode'] != 0:
                 return {"failed": True, "msg": api_rval}
-            return {"changed": False, "results": api_rval, "state": "list"}
+            return {"changed": False, "ansible_module_results": api_rval, "state": "list"}
 
         ########
         # Create
@@ -85,10 +85,10 @@ class OCImage(OpenShiftCLI):
                 if api_rval['returncode'] != 0:
                     return {"failed": True, "msg": api_rval}
 
-                return {"changed": True, "results": api_rval, "state": "present"}
+                return {"changed": True, "ansible_module_results": api_rval, "state": "present"}
 
             # image exists, no change
-            return {"changed": False, "results": api_rval, "state": "present"}
+            return {"changed": False, "ansible_module_results": api_rval, "state": "present"}
 
         return {"failed": True, "changed": False, "msg": "Unknown state passed. {0}".format(state)}
 
